@@ -22,4 +22,4 @@
 >   ListLength(L):      返回线性表L的元素个数。
 > - endADT  
 
-## 我的[线性表](https://sxhpai.github.io/2022/03/25/DS/DS1/)博客
+## 我的[线性表](https://sxhpai.github.io/2022/03/26/DS/DS1/)博客
