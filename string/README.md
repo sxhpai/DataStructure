@@ -9,9 +9,9 @@
 
 > ADT  
 > - 串（String）
->  
+>
 > Data  
->  
+>
 > - 串中元素仅由一个字符组成，相邻元素具有前驱和后继关系。
 >
 > Operation  
@@ -27,7 +27,8 @@
 > - Index(S,T,pos)：串S和T存在，T是非空串，1 <= pos <= StrLength(S)。若主串S中存在和串T值相同的子串，则返回他在主串S中第pos个字之后第一次出现的位置，否则返回0。
 > - Replace(S,T,V)：串S、T和V存在，T是非空串。用V替换主串S中出现的所有与T相等的不重叠的字串。
 > - StrInsert(S,pos,T)：串S和串T存在，1 <= pos <= StrLength(S) + 1。在串S的第pos个字符之前插入串T。
-> - StrDelete：串S存在，1 <= pos <= StrLength(S)-len + 1。从串S中删除第pos个字符起长度为len的字串。
+> - StrDelete：串S存在，1 <= pos <= StrLength(S)-len + 1。从串S中删除第pos个字符起长度为len的字串。  
+> 
 > endADT  
 
 ## 我的[串](https://sxhpai.github.io/2022/03/26/DS/DS1/)博客
