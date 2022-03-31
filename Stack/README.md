@@ -27,4 +27,4 @@
 > 
 > endADT
 
-## 我的[栈](https://sxhpai.github.io/2022/03/26/DS/DS1/)博客
+## 我的[栈](https://sxhpai.github.io/2022/03/30/DS/DS2/)博客
