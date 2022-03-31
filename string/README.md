@@ -24,7 +24,7 @@
 > - StrCompare(S,T)：若 S < T,返回值> 0，若S=T ，返回0，若S < T ，返回值 < 0 。
 > - Concat(T,S1,S2)：用T返回由S1和S2联接而成的新串。
 > - SubString(Sub,S,pos,len)：串S存在，1 <= pos <= StrLength(S)，且0 <= len <= StrLength(S) - pos +1,用Sub返回串S的第pos个字符起长度为len的字串。
-> - <font color = '#00FFFF'>Index(S,T,pos)</font>：串S和T存在，T是非空串，1 <= pos <= StrLength(S)。若主串S中存在和串T值相同的子串，则返回他在主串S中第pos个字之后第一次出现的位置，否则返回0。
+> - <font color = '#00FFFF'>Index(S,T,pos)</font>： 串S和T存在，T是非空串，1 <= pos <= StrLength(S)。若主串S中存在和串T值相同的子串，则返回他在主串S中第pos个字之后第一次出现的位置，否则返回0。
 > - Replace(S,T,V)：串S、T和V存在，T是非空串。用V替换主串S中出现的所有与T相等的不重叠的字串。
 > - StrInsert(S,pos,T)：串S和串T存在，1 <= pos <= StrLength(S) + 1。在串S的第pos个字符之前插入串T。
 > - StrDelete：串S存在，1 <= pos <= StrLength(S)-len + 1。从串S中删除第pos个字符起长度为len的字串。  
