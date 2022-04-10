@@ -1,62 +1,62 @@
 
-/***************** ÁÚ½Ó¶àÖØ±í *********************/
+/***************** é‚»æ¥å¤šé‡è¡¨ *********************/
 
 #include <stdio.h>
 #include <stdlib.h>
 
-//ÎŞÏòÍ¼µÄÓÅ»¯Êı¾İ½á¹¹
+//æ— å‘å›¾çš„ä¼˜åŒ–æ•°æ®ç»“æ„
 
 typedef char VertexType;
 typedef int EdgeType;
 #define MAXVEX 100
 
-/***** ÁÚ½Ó¶àÖØ±í *****/
+/***** é‚»æ¥å¤šé‡è¡¨ *****/
 
-//±ß±í½áµã½á¹¹
+//è¾¹è¡¨ç»“ç‚¹ç»“æ„
 typedef struct EdgeNode {
-	int ivex;				//ivex ºÍ jvexÊÇÓëÄ³Ìõ±ßÒÀ¸½µÄÁ½¸ö¶¥µãÔÚ¶¥µã±íÖĞµÄÏÂ±ê¡£
+	int ivex;				//ivex å’Œ jvexæ˜¯ä¸æŸæ¡è¾¹ä¾é™„çš„ä¸¤ä¸ªé¡¶ç‚¹åœ¨é¡¶ç‚¹è¡¨ä¸­çš„ä¸‹æ ‡ã€‚
 	int jvex;				
-	struct EdgeNode* ilink; //Ö¸ÏòÒÀ¸½¶¥µãivexµÄÏÂÒ»Ìõ±ß
-	struct EdgeNode* jlink;	//Ö¸ÏòÒÀ¸½¶¥µãjvexµÄÏÂÒ»Ìõ±ß
+	struct EdgeNode* ilink; //æŒ‡å‘ä¾é™„é¡¶ç‚¹ivexçš„ä¸‹ä¸€æ¡è¾¹
+	struct EdgeNode* jlink;	//æŒ‡å‘ä¾é™„é¡¶ç‚¹jvexçš„ä¸‹ä¸€æ¡è¾¹
 }EdgeNode;
 
-//¶¥µã±í½áµã½á¹¹
+//é¡¶ç‚¹è¡¨ç»“ç‚¹ç»“æ„
 typedef struct VertexNode {
-	VertexType data;		//¶¥µãÓò£¬´æ´¢¶¥µãĞÅÏ¢
-	EdgeNode* firstedge;		//Ö¸ÏòÒ»Ìõ±ß ¶¥µãÏÂ±êÓëivexÖµÏàÍ¬
+	VertexType data;		//é¡¶ç‚¹åŸŸï¼Œå­˜å‚¨é¡¶ç‚¹ä¿¡æ¯
+	EdgeNode* firstedge;		//æŒ‡å‘ä¸€æ¡è¾¹ é¡¶ç‚¹ä¸‹æ ‡ä¸ivexå€¼ç›¸åŒ
 
 }VertexNode, AdjmList[MAXVEX];
 
-//ÁÚ½Ó¶àÖØ±í
+//é‚»æ¥å¤šé‡è¡¨
 typedef struct {
 	AdjmList adjmlist;
 	int numVertex, numEdge;
 }GraphAdjmList;
 
-//¶àÖØÁÚ½Ó±íµÄ½¨Á¢
+//å»ºç«‹æ— å‘å›¾çš„å¤šé‡é‚»æ¥è¡¨ç»“æ„
 void CreateGraphAdjmList(GraphAdjmList* G)
 {
 	int i,j,k;
 	EdgeNode* e;
-	printf("ÇëÊäÈë½áµãÊıºÍ±ßÊı:\n");
+	printf("è¯·è¾“å…¥ç»“ç‚¹æ•°å’Œè¾¹æ•°:\n");
 	scanf("%d,%d", &G->numVertex, &G->numEdge);
 	getchar();
-	//½¨Á¢¶¥µã±í
-	printf("ÇëÊäÈë½áµãĞÅÏ¢:\n");
+	//å»ºç«‹é¡¶ç‚¹è¡¨
+	printf("è¯·è¾“å…¥ç»“ç‚¹ä¿¡æ¯:\n");
 	for (i = 0; i < G->numVertex; i++) {
 		scanf("%c", &G->adjmlist[i].data);
 		getchar();
 		G->adjmlist[i].firstedge = NULL;
 	}
-	//½¨Á¢±ß±í
+	//å»ºç«‹è¾¹è¡¨
 	for (k = 0; k < G->numEdge; k++) {
-		printf("ÇëÊäÈë(vi,vj)µÄi jµÄĞòºÅ:\n");
+		printf("è¯·è¾“å…¥(vi,vj)çš„i jçš„åºå·:\n");
 		scanf("%d,%d", &i, &j);
 
-		//ÉêÇëĞÂ½Úµã
+		//ç”³è¯·æ–°èŠ‚ç‚¹
 		e = (EdgeNode*)malloc(sizeof(EdgeNode));
 
-		//Í·²å·¨
+		//å¤´æ’æ³•
 		e->ivex = i;
 		e->ilink = G->adjmlist[i].firstedge;
 		G->adjmlist[i].firstedge = e;
@@ -67,7 +67,7 @@ void CreateGraphAdjmList(GraphAdjmList* G)
 	}
 }
 
-//´òÓ¡
+//æ‰“å°æ— å‘å›¾çš„å¤šé‡é‚»æ¥è¡¨ç»“æ„
 void DisplayGraphAdjmList(GraphAdjmList G)
 {
 	int i;
