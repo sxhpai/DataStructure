@@ -1,78 +1,80 @@
-/*************** Ê®×ÖÁ´±í *****************/
+/*************** åå­—é“¾è¡¨ *****************/
 
 #include <stdio.h>
 #include <stdlib.h>
 
-//¸ÃÖÖÊı¾İ½á¹¹£¬ÕûºÏÁËÁÚ½Ó±íºÍÄæÁÚ½Ó±í£¬Ê®·ÖÊÊºÏÓĞÏòÍ¼
+//è¯¥ç§æ•°æ®ç»“æ„ï¼Œæ•´åˆäº†é‚»æ¥è¡¨å’Œé€†é‚»æ¥è¡¨ï¼Œååˆ†é€‚åˆæœ‰å‘å›¾
 
 typedef char VertexType;
 typedef int EdgeType;
 #define MAXVEX 100
 
-/***** Ê®×ÖÁ´±í *****/
+/***** åå­—é“¾è¡¨ *****/
 
-//±ß±í½áµã½á¹¹
+//è¾¹è¡¨ç»“ç‚¹ç»“æ„
 typedef struct EdgeNode {
-	int headvex;				//Ö¸Ïò»¡ÆğµãÔÚ¶¥µã±íµÄÏÂ±ê£¬Èë
-	int tailvex;				//Ö¸Ïò»¡ÖÕµãÔÚ¶¥µã±íµÄÏÂ±ê£¬³ö
-	EdgeType weight;			//ÓÃÓÚ´æ´¢È¨Öµ£¬¶ÔÓÚ·ÇÍøÍ¼¿ÉÒÔ²»ĞèÒª
-	struct EdgeNode* headlink;	//Ö¸ÏòÖÕµãÏàÍ¬µÄÏÂÒ»Ìõ±ß£¬Èë
-	struct EdgeNode* taillink;	//Ö¸ÏòÆğµãÏàÍ¬µÄÏÂÒ»Ìõ±ß£¬³ö
+	int headvex;				//æŒ‡å‘å¼§èµ·ç‚¹åœ¨é¡¶ç‚¹è¡¨çš„ä¸‹æ ‡ï¼Œå…¥
+	int tailvex;				//æŒ‡å‘å¼§ç»ˆç‚¹åœ¨é¡¶ç‚¹è¡¨çš„ä¸‹æ ‡ï¼Œå‡º
+	EdgeType weight;			//ç”¨äºå­˜å‚¨æƒå€¼ï¼Œå¯¹äºéç½‘å›¾å¯ä»¥ä¸éœ€è¦
+	struct EdgeNode* headlink;	//æŒ‡å‘ç»ˆç‚¹ç›¸åŒçš„ä¸‹ä¸€æ¡è¾¹ï¼Œå…¥
+	struct EdgeNode* taillink;	//æŒ‡å‘èµ·ç‚¹ç›¸åŒçš„ä¸‹ä¸€æ¡è¾¹ï¼Œå‡º
 }EdgeNode;
 
-//¶¥µã±í½áµã½á¹¹
+//é¡¶ç‚¹è¡¨ç»“ç‚¹ç»“æ„
 typedef struct VertexNode {
-	VertexType data;		//¶¥µãÓò£¬´æ´¢¶¥µãĞÅÏ¢
-	EdgeNode* firstin;		//±íÊ¾Èë±ß±íÖ¸Õë£¬Ö¸Ïò¸Ã¶¥µãµÄÈë±ß±íµÄµÚÒ»¸ö½áµã£¬Èë
-	EdgeNode* firstout;		//±íÊ¾³ö±ß±íÖ¸Õë£¬Ö¸Ïò¸Ã¶¥µãµÄ³ö±ß±íµÄµÚÒ»¸ö½áµã£¬³ö
+	VertexType data;		//é¡¶ç‚¹åŸŸï¼Œå­˜å‚¨é¡¶ç‚¹ä¿¡æ¯
+	EdgeNode* firstin;		//è¡¨ç¤ºå…¥è¾¹è¡¨æŒ‡é’ˆï¼ŒæŒ‡å‘è¯¥é¡¶ç‚¹çš„å…¥è¾¹è¡¨çš„ç¬¬ä¸€ä¸ªç»“ç‚¹ï¼Œå…¥
+	EdgeNode* firstout;		//è¡¨ç¤ºå‡ºè¾¹è¡¨æŒ‡é’ˆï¼ŒæŒ‡å‘è¯¥é¡¶ç‚¹çš„å‡ºè¾¹è¡¨çš„ç¬¬ä¸€ä¸ªç»“ç‚¹ï¼Œå‡º
 }VertexNode, CroList[MAXVEX];
 
-//Ê®×ÖÁ´±í
+//åå­—é“¾è¡¨
 typedef struct {
 	CroList croList;
-	int numVertexs, numEdges;	//Í¼ÖĞµ±Ç°¶¥µãÊıºÍ±ßÊı
+	int numVertexs, numEdges;	//å›¾ä¸­å½“å‰é¡¶ç‚¹æ•°å’Œè¾¹æ•°
 }GraphCroList;
 
+//åˆ›å»ºæœ‰å‘å›¾çš„åå­—é“¾è¡¨ç»“æ„
 void CreateGraphCroList(GraphCroList* G)
 {
 	int i,j,k;
 	EdgeNode* e;
-	printf("ÇëÊäÈë¶¥µãÊıºÍ±ßÊı£º\n");
+	printf("è¯·è¾“å…¥é¡¶ç‚¹æ•°å’Œè¾¹æ•°ï¼š\n");
 	scanf("%d,%d", &G->numVertexs, &G->numEdges);
 	getchar();
-	printf("ÇëÊäÈë¶¥µãĞÅÏ¢£º\n");
-	//¶ÁÈë¶¥µãĞÅÏ¢£¬½¨Á¢¶¥µã±í
+	printf("è¯·è¾“å…¥é¡¶ç‚¹ä¿¡æ¯ï¼š\n");
+	//è¯»å…¥é¡¶ç‚¹ä¿¡æ¯ï¼Œå»ºç«‹é¡¶ç‚¹è¡¨
 	for (i = 0; i < G->numVertexs; i++) {
 		scanf("%c", &G->croList[i].data);
 		getchar();
 		G->croList[i].firstin = NULL;
 		G->croList[i].firstout = NULL;
 	}
-	//½¨Á¢±ß±í
+	//å»ºç«‹è¾¹è¡¨
 	for (k = 0; k < G->numEdges; k++) {
-		printf("ÇëÊäÈë±ß±íµÄ<vi,vj>µÄĞòºÅi,j£º\n");
-		scanf("%d,%d", &i, &j);	//iÎª±ßµÄÍ·£¬jÎª±ßµÄÎ²
+		printf("è¯·è¾“å…¥è¾¹è¡¨çš„<vi,vj>çš„åºå·i,jï¼š\n");
+		scanf("%d,%d", &i, &j);	//iä¸ºè¾¹çš„å¤´ï¼Œjä¸ºè¾¹çš„å°¾
 		getchar();
 
-		//ÉêÇëĞÂ½Úµã
+		//ç”³è¯·æ–°èŠ‚ç‚¹
 		e = (EdgeNode*)malloc(sizeof(EdgeNode));
 
-		//²åÈë£¬Í·²å·¨
-		e->headvex = j;	//»¡ÖÕµã
-		e->tailvex = i;	//»¡Æğµã
-		e->taillink = G->croList[i].firstout;	//³ö
+		//æ’å…¥ï¼Œå¤´æ’æ³•
+		e->headvex = j;	//å¼§ç»ˆç‚¹
+		e->tailvex = i;	//å¼§èµ·ç‚¹
+		e->taillink = G->croList[i].firstout;	//å‡º
 		G->croList[i].firstout = e;
-		e->headlink = G->croList[j].firstin;	//Èë
+		e->headlink = G->croList[j].firstin;	//å…¥
 		G->croList[j].firstin = e;
 
 	}
 }
 
+//æ‰“å°æœ‰å‘å›¾çš„åå­—é“¾è¡¨ç»“æ„
 void DisplayGraphCroList(GraphCroList G)
 {
 	int i;
 	printf("\n---------------\n");
-	//³ö
+	//å‡º
 	for (i = 0; i < G.numVertexs; i++) {
 		printf("%d - %c ->", i, G.croList[i].data);
 		EdgeNode* temp = G.croList[i].firstout;
@@ -83,7 +85,7 @@ void DisplayGraphCroList(GraphCroList G)
 		printf("\n");
 	}
 	printf("\n---------------\n");
-	//Èë
+	//å…¥
 	for (i = 0; i < G.numVertexs; i++) {
 		printf("%d - %c ->", i, G.croList[i].data);
 		EdgeNode* temp = G.croList[i].firstin;
