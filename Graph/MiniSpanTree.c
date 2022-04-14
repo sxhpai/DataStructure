@@ -1,40 +1,44 @@
+/********************æœ€å°ç”Ÿæˆæ ‘******************/
+//æ™®åˆ©å§†ç®—æ³•
+//å…‹é²æ–¯å¡å°”ç®—æ³•
+/***********************************************/
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
 
-typedef char VertexType;	//¶¥µãÊı¾İÓòÀàĞÍ
-typedef int EdgeType;		//±ßÉÏµÄÈ¨ÖµÀàĞÍ
-#define MAXVEX 100			//¶¥µãµÄ×î´ó¸öÊı
+typedef char VertexType;	//é¡¶ç‚¹æ•°æ®åŸŸç±»å‹
+typedef int EdgeType;		//è¾¹ä¸Šçš„æƒå€¼ç±»å‹
+#define MAXVEX 100			//é¡¶ç‚¹çš„æœ€å¤§ä¸ªæ•°
 #define MAXEDGE 100
-#define INFINITY 65535		//ÓÃ65535±íÊ¾¡Ş
+#define INFINITY 65535		//ç”¨65535è¡¨ç¤ºâˆ
 
-//ÁÚ½Ó¾ØÕó
+//é‚»æ¥çŸ©é˜µ
 typedef struct {
-	VertexType vex[MAXVEX];			//¶¥µãÊı×é
-	EdgeType arc[MAXVEX][MAXVEX];	//±ßÊı×é£¬ÁÚ½Ó¾ØÕóµÄÈ¨ÖØĞ´µÀ±ßÊı×éÖĞ
-	int numVertexs, numEdges;		//¶¥µãÊıºÍ±ßÊı
+	VertexType vex[MAXVEX];			//é¡¶ç‚¹æ•°ç»„
+	EdgeType arc[MAXVEX][MAXVEX];	//è¾¹æ•°ç»„ï¼Œé‚»æ¥çŸ©é˜µçš„æƒé‡å†™é“è¾¹æ•°ç»„ä¸­
+	int numVertexs, numEdges;		//é¡¶ç‚¹æ•°å’Œè¾¹æ•°
 }MGraph;
 
-//±ß¼¯Êı×é Edge ½á¹¹µÄ¶¨Òå
+//è¾¹é›†æ•°ç»„ Edge ç»“æ„çš„å®šä¹‰
 typedef struct {
 	int begin;
 	int end;
 	int weight;
 }Edge;
 
-//´´½¨ÎŞÏòÍ¼µÄÁÚ½Ó¾ØÕó
+//åˆ›å»ºæ— å‘å›¾çš„é‚»æ¥çŸ©é˜µ
 void CreateMGraph(MGraph* G) {
 	int i,j,k,w;
-	printf("ÇëÊäÈë¶¥µãºÍ±ßµÄÊıÄ¿£º\n");
+	printf("è¯·è¾“å…¥é¡¶ç‚¹å’Œè¾¹çš„æ•°ç›®ï¼š\n");
 	scanf_s("%d,%d", &G->numVertexs, &G->numEdges);
 	getchar();
 
-	printf("ÇëÊäÈë¶¥µãĞÅÏ¢£º\n");
+	printf("è¯·è¾“å…¥é¡¶ç‚¹ä¿¡æ¯ï¼š\n");
 	for (i = 0; i < G->numVertexs; i++) {
 		scanf_s("%c", &G->vex[i]);
 		getchar();
 	}
-	//³õÊ¼»¯±ß¾ØÕó
+	//åˆå§‹åŒ–è¾¹çŸ©é˜µ
 	for (i = 0; i < G->numEdges; i++) {
 		for (j = 0; j < G->numEdges; j++) {
 			if (i == j) {
@@ -45,9 +49,9 @@ void CreateMGraph(MGraph* G) {
 			}
 		}
 	}
-	//¶ÁÈë±ß¾ØÕóĞÅÏ¢
+	//è¯»å…¥è¾¹çŸ©é˜µä¿¡æ¯
 	for (k = 0; k < G->numEdges; k++) {
-		printf("ÇëÊäÈë(vi,vj)µÄĞòºÅi,jºÍÈ¨ÖØ:\n");
+		printf("è¯·è¾“å…¥(vi,vj)çš„åºå·i,jå’Œæƒé‡:\n");
 		scanf_s("%d,%d,%d", &i, &j, &w);
 		getchar();
 		G->arc[i][j] = w;
@@ -55,7 +59,7 @@ void CreateMGraph(MGraph* G) {
 	}
 }
 
-//´òÓ¡ÎŞÏòÍ¼µÄÁÚ½Ó¾ØÕó
+//æ‰“å°æ— å‘å›¾çš„é‚»æ¥çŸ©é˜µ
 void DisplayMGraph(MGraph G) {
 	int i, j;
 	for (i = 0; i < G.numVertexs; i++) {
@@ -66,38 +70,38 @@ void DisplayMGraph(MGraph G) {
 	}
 }
 
-//ÆÕÀïÄ·Ëã·¨Éú³É×îĞ¡Éú³ÉÊ÷
+//æ™®é‡Œå§†ç®—æ³•ç”Ÿæˆæœ€å°ç”Ÿæˆæ ‘
 void MiniSpanTree_Prim(MGraph G)
 {
 	int min, i, j, k;
-	int adjvex[MAXVEX];		//±£´æÏà¹Ø¶¥µãÏÂ±ê
-	int lowcost[MAXVEX];	//±£´æÏà¹Ø¶¥µã¼ä±ßµÄÈ¨Öµ
-	lowcost[0] = 0;		//³õÊ¼»¯µÚÒ»¸öÈ¨ÖµÎª0£¬¼´v0¼ÓÈëÉú³ÉÊ÷
-						/* lowcost µÄÖµÎª0£¬ÔÚÕâÀï¾ÍÊÇ´ËÏÂ±êµÄ¶¥µãÒÑ¾­¼ÓÈëÉú³ÉÊ÷*/
-	adjvex[0] = 0;		//³õÊ¼»¯µÚÒ»¸ö¶¥µãÏÂ±êÎª0
-	for(i = 1; i < G.numVertexs; i++) {	//Ñ­»·³ıÁËÏÂ±êÎª0ÍâµÄÈ«²¿¶¥µã
-		lowcost[i] = G.arc[0][i];		//½«v0¶¥µãÓëÖ®ÓĞ±ßµÄÈ¨Öµ´æÈëÊı×é
-		adjvex[i] = 0;					//³õÊ¼»¯¶¼Îªv0µÄÏÂ±ê,Ã¿¸öÔªËØ¶¼ÊÇv0µÄÏÂ±ê
+	int adjvex[MAXVEX];		//ä¿å­˜ç›¸å…³é¡¶ç‚¹ä¸‹æ ‡
+	int lowcost[MAXVEX];	//ä¿å­˜ç›¸å…³é¡¶ç‚¹é—´è¾¹çš„æƒå€¼
+	lowcost[0] = 0;		//åˆå§‹åŒ–ç¬¬ä¸€ä¸ªæƒå€¼ä¸º0ï¼Œå³v0åŠ å…¥ç”Ÿæˆæ ‘
+						/* lowcost çš„å€¼ä¸º0ï¼Œåœ¨è¿™é‡Œå°±æ˜¯æ­¤ä¸‹æ ‡çš„é¡¶ç‚¹å·²ç»åŠ å…¥ç”Ÿæˆæ ‘*/
+	adjvex[0] = 0;		//åˆå§‹åŒ–ç¬¬ä¸€ä¸ªé¡¶ç‚¹ä¸‹æ ‡ä¸º0
+	for(i = 1; i < G.numVertexs; i++) {	//å¾ªç¯é™¤äº†ä¸‹æ ‡ä¸º0å¤–çš„å…¨éƒ¨é¡¶ç‚¹
+		lowcost[i] = G.arc[0][i];		//å°†v0é¡¶ç‚¹ä¸ä¹‹æœ‰è¾¹çš„æƒå€¼å­˜å…¥æ•°ç»„
+		adjvex[i] = 0;					//åˆå§‹åŒ–éƒ½ä¸ºv0çš„ä¸‹æ ‡,æ¯ä¸ªå…ƒç´ éƒ½æ˜¯v0çš„ä¸‹æ ‡
 	}
 	//
 	for(i = 1; i < G.numVertexs; i++) {
-		min = INFINITY;		//³õÊ¼»¯×îĞ¡È¨ÖµÎª¡Ş
+		min = INFINITY;		//åˆå§‹åŒ–æœ€å°æƒå€¼ä¸ºâˆ
 		j = 1; k = 0;
-		while(j < G.numVertexs) {	//Ñ­»·È«²¿¶¥µã,ÕÒµ½Óëv0ÏàÁ¬µÄ×îĞ¡È¨Öµ±ß¡£
+		while(j < G.numVertexs) {	//å¾ªç¯å…¨éƒ¨é¡¶ç‚¹,æ‰¾åˆ°ä¸v0ç›¸è¿çš„æœ€å°æƒå€¼è¾¹ã€‚
 			if(lowcost[j] != 0 && lowcost[j] < min) {
-				//Èç¹ûÈ¨Öµ²»Îª0ÇÒÈ¨ÖµĞ¡ÓÚmin
-				min = lowcost[j];		//Ôò½«µ±Ç°È¨Öµ³ÉÎª×îĞ¡Öµ
-				k = j;					//½«µ±Ç°×îĞ¡ÖµµÄÏÂ±ê´æÈëk
+				//å¦‚æœæƒå€¼ä¸ä¸º0ä¸”æƒå€¼å°äºmin
+				min = lowcost[j];		//åˆ™å°†å½“å‰æƒå€¼æˆä¸ºæœ€å°å€¼
+				k = j;					//å°†å½“å‰æœ€å°å€¼çš„ä¸‹æ ‡å­˜å…¥k
 			}
 			j++;
 		}
-		printf(" (%d,%d)",adjvex[k],k);	//´òÓ¡µ±Ç°¶¥µã±ßÖĞÈ¨Öµ×îĞ¡±ß
-		lowcost[k] = 0;	//½«µ±Ç°¶¥µãµÄÈ¨ÖµÉèÎª0£¬±íÊ¾´Ë¶¥µãÒÑ¾­Íê³ÉÈÎÎñ
-		for(j = 1; j < G.numVertexs; j++) {	//Ñ­»·ËùÓĞ¶¥µã
+		printf(" (%d,%d)",adjvex[k],k);	//æ‰“å°å½“å‰é¡¶ç‚¹è¾¹ä¸­æƒå€¼æœ€å°è¾¹
+		lowcost[k] = 0;	//å°†å½“å‰é¡¶ç‚¹çš„æƒå€¼è®¾ä¸º0ï¼Œè¡¨ç¤ºæ­¤é¡¶ç‚¹å·²ç»å®Œæˆä»»åŠ¡
+		for(j = 1; j < G.numVertexs; j++) {	//å¾ªç¯æ‰€æœ‰é¡¶ç‚¹
 			if(lowcost[j] != 0 && G.arc[k][j] < lowcost[j]) {
-				//ÈôÏÂ±êÎªk¶¥µã¸÷±ßÈ¨ÖµĞ¡ÓÚ´ËÇ°ÕâĞ©¶¥µãÎ´±»¼ÓÈëÉú³ÉÊ÷È¨Öµ
-				lowcost[j] = G.arc[k][j];		//½«½ÏĞ¡È¨Öµ´æÈëlowcost
-				adjvex[j] = k;				//½«ÏÂ±êÎªkµÄ¶¥µã´æÈëadjvex
+				//è‹¥ä¸‹æ ‡ä¸ºké¡¶ç‚¹å„è¾¹æƒå€¼å°äºæ­¤å‰è¿™äº›é¡¶ç‚¹æœªè¢«åŠ å…¥ç”Ÿæˆæ ‘æƒå€¼
+				lowcost[j] = G.arc[k][j];		//å°†è¾ƒå°æƒå€¼å­˜å…¥lowcost
+				adjvex[j] = k;				//å°†ä¸‹æ ‡ä¸ºkçš„é¡¶ç‚¹å­˜å…¥adjvex
 			}
 		}
 	}
@@ -105,14 +109,14 @@ void MiniSpanTree_Prim(MGraph G)
 
 int Find(int *parent, int f);
 
-//¿ËÂ³Ë¹¿¨¶ûËã·¨Éú³É×îĞ¡Éú³ÉÊ÷
-void MiniSpanTree_Kruskal(MGraph G)		//Éú³É×îĞ¡Éú³ÉÊ÷
+//å…‹é²æ–¯å¡å°”ç®—æ³•ç”Ÿæˆæœ€å°ç”Ÿæˆæ ‘
+void MiniSpanTree_Kruskal(MGraph G)		//ç”Ÿæˆæœ€å°ç”Ÿæˆæ ‘
 {
 	int i, j, k, p, n, m;
-	Edge edges[MAXEDGE];	//¶¨Òå±ß¼¯Êı×é
-	int parent[MAXVEX];	//¶¨ÒåÒ»Êı×éÓÃÀ´ÅĞ¶Ï±ßÓë±ßÊÇ·ñĞÎ³É»·Â·
+	Edge edges[MAXEDGE];	//å®šä¹‰è¾¹é›†æ•°ç»„
+	int parent[MAXVEX];	//å®šä¹‰ä¸€æ•°ç»„ç”¨æ¥åˆ¤æ–­è¾¹ä¸è¾¹æ˜¯å¦å½¢æˆç¯è·¯
 
-	//½«ÁÚ½Ó¾ØÕóG×ª»¯Îª±ß¼¯Êı×éedges²¢°´È¨ÓÉĞ¡µ½´óÅÅĞò
+	//å°†é‚»æ¥çŸ©é˜µGè½¬åŒ–ä¸ºè¾¹é›†æ•°ç»„edgeså¹¶æŒ‰æƒç”±å°åˆ°å¤§æ’åº
 	k = 0;
 	Edge e;
 	for(i = 0; i < G.numVertexs; i++) {
@@ -144,20 +148,20 @@ void MiniSpanTree_Kruskal(MGraph G)		//Éú³É×îĞ¡Éú³ÉÊ÷
 	}
 
 	for(i = 0; i < G.numVertexs; i++) {
-		parent[i] = 0;	//³õÊ¼»¯Êı×éÖµÎª 0
+		parent[i] = 0;	//åˆå§‹åŒ–æ•°ç»„å€¼ä¸º 0
 	}
-	for(i = 0; i < G.numEdges; i++) {	//Ñ­»·Ã¿Ò»Ìõ±ß
+	for(i = 0; i < G.numEdges; i++) {	//å¾ªç¯æ¯ä¸€æ¡è¾¹
 		n = Find(parent,edges[i].begin);
 		m = Find(parent,edges[i].end);
-		if( n != m) {					//¼ÙÈç n Óë m ²»µÈ£¬ËµÃ÷´Ë±ßÃ»ÓĞÓëÏÖÓĞÉú³ÉÊ÷ĞÎ³É»·Â·
-			parent[n] = m;				//½«´Ë±ßµÄ½áÎ²¶¥µã·ÅÈëÏÂ±êÎªÆğµãµÄparentÖĞ
-										//±íÊ¾´Ë¶¥µãÒÑ¾­ÔÚÉú³ÉÊ÷¼¯ºÏÖĞ
+		if( n != m) {					//å‡å¦‚ n ä¸ m ä¸ç­‰ï¼Œè¯´æ˜æ­¤è¾¹æ²¡æœ‰ä¸ç°æœ‰ç”Ÿæˆæ ‘å½¢æˆç¯è·¯
+			parent[n] = m;				//å°†æ­¤è¾¹çš„ç»“å°¾é¡¶ç‚¹æ”¾å…¥ä¸‹æ ‡ä¸ºèµ·ç‚¹çš„parentä¸­
+										//è¡¨ç¤ºæ­¤é¡¶ç‚¹å·²ç»åœ¨ç”Ÿæˆæ ‘é›†åˆä¸­
 			printf("(%d,%d)-%d ",edges[i].begin,edges[i].end,edges[i].weight);
 		}
 	}
 }
 
-//²éÕÒÁ¬Ïß¶¥µãµÄÎ²²¿ÏÂ±ê
+//æŸ¥æ‰¾è¿çº¿é¡¶ç‚¹çš„å°¾éƒ¨ä¸‹æ ‡
 int Find(int *parent, int f) {
 	while( parent[f]>0 ) {
 		f = parent[f];
