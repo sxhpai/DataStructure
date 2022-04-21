@@ -5,6 +5,7 @@
 - 静态查找有序表查找(即：要查找的序列是有序的)（OrderedSearch.c）
 - 动态查找二叉排序树（SearchBST.c）
 - 二叉平衡树（SearchAVL.c）
+- B树（SearchBTree.c）
 
 
 
