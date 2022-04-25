@@ -10,7 +10,7 @@
   - 堆排序
   - 归并排序
   - 快速排序
-
+![Sort](./Sort.png)
 
 
 ## 我的[排序](https://sxhpai.github.io/2022/04/09/DS/DS7/)博客
